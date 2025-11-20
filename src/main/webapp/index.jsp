@@ -10,11 +10,6 @@
 <%
     Locale indonesia = new Locale("id", "ID");
     NumberFormat rupiahFormat = NumberFormat.getCurrencyInstance(indonesia);
-
-<<<<<<< HEAD
-=======
-   
->>>>>>> b2d9aa4738e914c8ab1fd8ba545b50fe0d6cf04b
     String inputName = (String) session.getAttribute("inputName");
     String shouldOpenModal = (String) session.getAttribute("openModal");
 
