@@ -1,11 +1,16 @@
 package com.example.servlet;
 
-import com.example.model.Product;
-import com.example.dao.ProductDAO;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
+
+import com.example.dao.ProductDAO;
+import com.example.model.Product;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class ProductServlet extends HttpServlet {
     
@@ -22,21 +27,21 @@ public class ProductServlet extends HttpServlet {
                 int price = Integer.parseInt(request.getParameter("price"));
                 int stock = Integer.parseInt(request.getParameter("stock"));
                 int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-                
+
+                // Check if product already exists
                 if (dao.productExists(name)) {
-                    session.setAttribute("errorMessage", "Gagal! Produk '" + name + "' sudah tersedia.");
+                    session.setAttribute("errorMessage", "Failed! The product '" + name + "' already exists.");
                     session.setAttribute("inputName", name);
                     session.setAttribute("openModal", "true"); 
                     
                     response.sendRedirect("index.jsp");
-                    return; 
-                } 
-                
+                    return;
+                }
 
                 Product product = new Product(0, name, price, stock, categoryId);
                 dao.addProduct(product);
-                session.setAttribute("successMessage", "Berhasil menambah produk baru!");
 
+                session.setAttribute("successMessage", "Product successfully added!");
 
             } else if ("update".equals(action)) {
                 int id = Integer.parseInt(request.getParameter("id"));
@@ -44,18 +49,17 @@ public class ProductServlet extends HttpServlet {
                 int price = Integer.parseInt(request.getParameter("price"));
                 int stock = Integer.parseInt(request.getParameter("stock"));
                 int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-                
+
                 Product product = new Product(id, name, price, stock, categoryId);
                 dao.updateProduct(product);
-                
-                session.setAttribute("successMessage", "Produk berhasil diperbarui!");
+
+                session.setAttribute("successMessage", "Product successfully updated!");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            session.setAttribute("errorMessage", "Error Sistem: " + e.getMessage());
+            session.setAttribute("errorMessage", "System Error: " + e.getMessage());
         }
-        
 
         response.sendRedirect("index.jsp");
     }
@@ -70,7 +74,7 @@ public class ProductServlet extends HttpServlet {
             if ("search".equals(action)) {
                 String searchName = request.getParameter("searchName");
                 List<Product> products = dao.searchProductsByName(searchName);
-                
+
                 request.setAttribute("products", products);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
 
@@ -79,7 +83,7 @@ public class ProductServlet extends HttpServlet {
                 if (idStr != null) {
                     int id = Integer.parseInt(idStr);
                     dao.deleteProduct(id);
-                    session.setAttribute("successMessage", "Produk berhasil dihapus.");
+                    session.setAttribute("successMessage", "Product successfully deleted.");
                 }
                 response.sendRedirect("index.jsp");
 

@@ -1,15 +1,19 @@
 package com.example.servlet;
 
-import com.example.model.Category;
-import com.example.dao.CategoryDAO;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
 import java.io.IOException;
+
+import com.example.dao.CategoryDAO;
+import com.example.model.Category;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class CategoryServlet extends HttpServlet {
     private CategoryDAO dao = new CategoryDAO();
 
-    // 1. doPost UNTUK MENANGANI FORM (TAMBAH & EDIT/UPDATE)
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -24,7 +28,6 @@ public class CategoryServlet extends HttpServlet {
                 session.setAttribute("successMessage", "Kategori berhasil ditambahkan!");
 
             } else if ("update".equals(action)) {
-                // Ini menangani form dari Modal Edit
                 int id = Integer.parseInt(request.getParameter("id"));
                 String name = request.getParameter("name");
 
@@ -41,7 +44,6 @@ public class CategoryServlet extends HttpServlet {
         response.sendRedirect("categories.jsp");
     }
 
-    // 2. doGet UNTUK MENANGANI LINK (HAPUS)
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -51,7 +53,6 @@ public class CategoryServlet extends HttpServlet {
             if ("delete".equals(action)) {
                 int id = Integer.parseInt(request.getParameter("id"));
 
-                // Cek apakah kategori masih punya produk?
                 if (dao.categoryHasProducts(id)) {
                     session.setAttribute("errorMessage", "Gagal! Kategori ini masih memiliki produk di dalamnya.");
                 } else {

@@ -11,7 +11,6 @@
     Locale indonesia = new Locale("id", "ID");
     NumberFormat rupiahFormat = NumberFormat.getCurrencyInstance(indonesia);
 
-    // Logic Form agar tidak hilang saat error (khusus tambah produk)
     String inputName = (String) session.getAttribute("inputName");
     String shouldOpenModal = (String) session.getAttribute("openModal");
 
@@ -22,9 +21,9 @@
 %>
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-    <title>Sistem Manajemen Inventori</title>
+    <title>Inventory Management System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -46,7 +45,7 @@
 <div class="toast-notification fixed top-5 right-5 z-50 bg-white border-l-4 border-red-500 shadow-2xl rounded-lg p-4 flex items-start gap-3 max-w-sm">
     <div class="text-red-500 mt-0.5"><i class="fa-solid fa-circle-exclamation text-xl"></i></div>
     <div>
-        <h4 class="font-bold text-red-600 text-sm">Gagal!</h4>
+        <h4 class="font-bold text-red-600 text-sm">Failed!</h4>
         <p class="text-sm text-gray-600 mt-1"><%= errorMsg %></p>
     </div>
     <button onclick="this.parentElement.remove()" class="text-gray-400 hover:text-gray-600 ml-auto"><i class="fa-solid fa-xmark"></i></button>
@@ -56,7 +55,7 @@
 <div class="toast-notification fixed top-5 right-5 z-50 bg-white border-l-4 border-green-500 shadow-2xl rounded-lg p-4 flex items-start gap-3 max-w-sm">
     <div class="text-green-500 mt-0.5"><i class="fa-solid fa-circle-check text-xl"></i></div>
     <div>
-        <h4 class="font-bold text-green-600 text-sm">Berhasil!</h4>
+        <h4 class="font-bold text-green-600 text-sm">Success!</h4>
         <p class="text-sm text-gray-600 mt-1"><%= successMsg %></p>
     </div>
     <button onclick="this.parentElement.remove()" class="text-gray-400 hover:text-gray-600 ml-auto"><i class="fa-solid fa-xmark"></i></button>
@@ -65,27 +64,27 @@
 
 <div class="max-w-7xl mx-auto">
     <div class="mb-8">
-        <h1 class="text-2xl font-bold text-slate-900">Sistem Manajemen Inventori</h1>
-        <p class="text-slate-500 mt-1">Kelola kategori dan produk stok barang dengan mudah</p>
+        <h1 class="text-2xl font-bold text-slate-900">Inventory Management System</h1>
+        <p class="text-slate-500 mt-1">Easily manage categories and product stock</p>
     </div>
 
     <div class="flex space-x-4 mb-6 bg-gray-100 p-1 rounded-lg w-fit">
         <button class="px-6 py-2 bg-white shadow-sm rounded-md text-sm font-medium text-gray-900 flex items-center gap-2">
-            <i class="fa-solid fa-box-open"></i> Produk
+            <i class="fa-solid fa-box-open"></i> Products
         </button>
         <a href="categories.jsp" class="px-6 py-2 hover:bg-gray-200 rounded-md text-sm font-medium text-gray-500 flex items-center gap-2 transition-colors">
-            <i class="fa-solid fa-layer-group"></i> Kategori
+            <i class="fa-solid fa-layer-group"></i> Categories
         </a>
     </div>
 
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="p-6 flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
-                <h2 class="text-lg font-semibold text-gray-900">Manajemen Produk</h2>
-                <p class="text-sm text-gray-500">Kelola stok barang dan informasi produk</p>
+                <h2 class="text-lg font-semibold text-gray-900">Product Management</h2>
+                <p class="text-sm text-gray-500">Manage product stock and information</p>
             </div>
             <button onclick="document.getElementById('addModal').showModal()" class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors">
-                <i class="fa-solid fa-plus"></i> Tambah Produk
+                <i class="fa-solid fa-plus"></i> Add Product
             </button>
         </div>
 
@@ -95,7 +94,7 @@
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
                 </div>
-                <input type="text" name="searchName" class="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-3" placeholder="Cari produk...">
+                <input type="text" name="searchName" class="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-3" placeholder="Search product...">
             </form>
         </div>
 
@@ -104,11 +103,11 @@
                 <thead class="text-xs text-gray-700 uppercase bg-white border-b">
                 <tr>
                     <th scope="col" class="px-6 py-4 font-semibold">ID</th>
-                    <th scope="col" class="px-6 py-4 font-semibold">Nama Produk</th>
-                    <th scope="col" class="px-6 py-4 font-semibold">Kategori</th>
-                    <th scope="col" class="px-6 py-4 font-semibold text-right">Harga</th>
-                    <th scope="col" class="px-6 py-4 font-semibold text-center">Stok</th>
-                    <th scope="col" class="px-6 py-4 font-semibold text-center">Aksi</th>
+                    <th scope="col" class="px-6 py-4 font-semibold">Product Name</th>
+                    <th scope="col" class="px-6 py-4 font-semibold">Category</th>
+                    <th scope="col" class="px-6 py-4 font-semibold text-right">Price</th>
+                    <th scope="col" class="px-6 py-4 font-semibold text-center">Stock</th>
+                    <th scope="col" class="px-6 py-4 font-semibold text-center">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -144,14 +143,14 @@
                                 <i class="fa-solid fa-pen"></i>
                             </button>
 
-                            <a href="product?action=delete&id=<%= prod.getId() %>" onclick="return confirm('Yakin hapus?')" class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full border border-gray-200 transition-colors" title="Delete">
+                            <a href="product?action=delete&id=<%= prod.getId() %>" onclick="return confirm('Are you sure you want to delete this?')" class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full border border-gray-200 transition-colors" title="Delete">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                         </div>
                     </td>
                 </tr>
                 <% } } else { %>
-                <tr><td colspan="6" class="text-center py-8 text-gray-500">Tidak ada data.</td></tr>
+                <tr><td colspan="6" class="text-center py-8 text-gray-500">No data available.</td></tr>
                 <% } %>
                 </tbody>
             </table>
@@ -162,21 +161,21 @@
 <dialog id="addModal" class="p-0 rounded-lg shadow-xl backdrop:bg-gray-900/50 w-full max-w-md">
     <div class="bg-white rounded-lg">
         <div class="flex justify-between items-center p-4 border-b">
-            <h3 class="text-lg font-semibold text-gray-900">Tambah Produk Baru</h3>
+            <h3 class="text-lg font-semibold text-gray-900">Add New Product</h3>
             <button onclick="document.getElementById('addModal').close()" class="text-gray-400 hover:text-gray-900"><i class="fa-solid fa-xmark text-xl"></i></button>
         </div>
         <form action="product" method="post" class="p-4 space-y-4">
             <input type="hidden" name="action" value="add">
             <div>
-                <label class="block mb-1 text-sm font-medium text-gray-900">Nama Produk</label>
+                <label class="block mb-1 text-sm font-medium text-gray-900">Product Name</label>
                 <input type="text" name="name" value="<%= inputName != null ? inputName : "" %>" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
             </div>
             <div class="grid grid-cols-2 gap-4">
-                <div><label class="block mb-1 text-sm font-medium text-gray-900">Harga</label><input type="number" name="price" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"></div>
-                <div><label class="block mb-1 text-sm font-medium text-gray-900">Stok</label><input type="number" name="stock" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"></div>
+                <div><label class="block mb-1 text-sm font-medium text-gray-900">Price</label><input type="number" name="price" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"></div>
+                <div><label class="block mb-1 text-sm font-medium text-gray-900">Stock</label><input type="number" name="stock" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"></div>
             </div>
             <div>
-                <label class="block mb-1 text-sm font-medium text-gray-900">Kategori</label>
+                <label class="block mb-1 text-sm font-medium text-gray-900">Category</label>
                 <select name="categoryId" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
                     <%
                         CategoryDAO catDao = new CategoryDAO();
@@ -188,8 +187,8 @@
                 </select>
             </div>
             <div class="flex justify-end gap-2 pt-4">
-                <button type="button" onclick="document.getElementById('addModal').close()" class="text-gray-700 bg-white border border-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-gray-100">Batal</button>
-                <button type="submit" class="text-white bg-slate-900 hover:bg-slate-800 font-medium rounded-lg text-sm px-5 py-2.5">Simpan</button>
+                <button type="button" onclick="document.getElementById('addModal').close()" class="text-gray-700 bg-white border border-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-gray-100">Cancel</button>
+                <button type="submit" class="text-white bg-slate-900 hover:bg-slate-800 font-medium rounded-lg text-sm px-5 py-2.5">Save</button>
             </div>
         </form>
     </div>
@@ -198,7 +197,7 @@
 <dialog id="editModal" class="p-0 rounded-lg shadow-xl backdrop:bg-gray-900/50 w-full max-w-md">
     <div class="bg-white rounded-lg">
         <div class="flex justify-between items-center p-4 border-b">
-            <h3 class="text-lg font-semibold text-gray-900">Edit Produk</h3>
+            <h3 class="text-lg font-semibold text-gray-900">Edit Product</h3>
             <button onclick="document.getElementById('editModal').close()" class="text-gray-400 hover:text-gray-900"><i class="fa-solid fa-xmark text-xl"></i></button>
         </div>
         <form action="product" method="post" class="p-4 space-y-4">
@@ -206,21 +205,21 @@
             <input type="hidden" id="edit-id" name="id">
 
             <div>
-                <label class="block mb-1 text-sm font-medium text-gray-900">Nama Produk</label>
+                <label class="block mb-1 text-sm font-medium text-gray-900">Product Name</label>
                 <input type="text" id="edit-name" name="name" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block mb-1 text-sm font-medium text-gray-900">Harga</label>
+                    <label class="block mb-1 text-sm font-medium text-gray-900">Price</label>
                     <input type="number" id="edit-price" name="price" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
                 </div>
                 <div>
-                    <label class="block mb-1 text-sm font-medium text-gray-900">Stok</label>
+                    <label class="block mb-1 text-sm font-medium text-gray-900">Stock</label>
                     <input type="number" id="edit-stock" name="stock" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
                 </div>
             </div>
             <div>
-                <label class="block mb-1 text-sm font-medium text-gray-900">Kategori</label>
+                <label class="block mb-1 text-sm font-medium text-gray-900">Category</label>
                 <select id="edit-category" name="categoryId" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
                     <%
                         if(categories != null) { for (Category cat : categories) {
@@ -230,8 +229,8 @@
                 </select>
             </div>
             <div class="flex justify-end gap-2 pt-4">
-                <button type="button" onclick="document.getElementById('editModal').close()" class="text-gray-700 bg-white border border-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-gray-100">Batal</button>
-                <button type="submit" class="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5">Update Produk</button>
+                <button type="button" onclick="document.getElementById('editModal').close()" class="text-gray-700 bg-white border border-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-gray-100">Cancel</button>
+                <button type="submit" class="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5">Update Product</button>
             </div>
         </form>
     </div>
@@ -239,25 +238,21 @@
 
 <script>
     function openEditModal(button) {
-        // Ambil data dari atribut tombol yang diklik
         var id = button.getAttribute("data-id");
         var name = button.getAttribute("data-name");
         var price = button.getAttribute("data-price");
         var stock = button.getAttribute("data-stock");
         var category = button.getAttribute("data-category");
 
-        // Masukkan data ke dalam input form di Modal Edit
         document.getElementById("edit-id").value = id;
         document.getElementById("edit-name").value = name;
         document.getElementById("edit-price").value = price;
         document.getElementById("edit-stock").value = stock;
         document.getElementById("edit-category").value = category;
 
-        // Tampilkan Modal
         document.getElementById("editModal").showModal();
     }
 
-    // Auto open modal tambah jika ada error (dari session)
     <% if(shouldOpenModal != null) { %>
     document.getElementById('addModal').showModal();
     <% } %>
