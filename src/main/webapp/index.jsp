@@ -11,6 +11,10 @@
     Locale indonesia = new Locale("id", "ID");
     NumberFormat rupiahFormat = NumberFormat.getCurrencyInstance(indonesia);
 
+<<<<<<< HEAD
+=======
+   
+>>>>>>> b2d9aa4738e914c8ab1fd8ba545b50fe0d6cf04b
     String inputName = (String) session.getAttribute("inputName");
     String shouldOpenModal = (String) session.getAttribute("openModal");
 
@@ -238,21 +242,37 @@
 
 <script>
     function openEditModal(button) {
+<<<<<<< HEAD
+=======
+     
+>>>>>>> b2d9aa4738e914c8ab1fd8ba545b50fe0d6cf04b
         var id = button.getAttribute("data-id");
         var name = button.getAttribute("data-name");
         var price = button.getAttribute("data-price");
         var stock = button.getAttribute("data-stock");
         var category = button.getAttribute("data-category");
 
+<<<<<<< HEAD
+=======
+        
+>>>>>>> b2d9aa4738e914c8ab1fd8ba545b50fe0d6cf04b
         document.getElementById("edit-id").value = id;
         document.getElementById("edit-name").value = name;
         document.getElementById("edit-price").value = price;
         document.getElementById("edit-stock").value = stock;
         document.getElementById("edit-category").value = category;
 
+<<<<<<< HEAD
         document.getElementById("editModal").showModal();
     }
 
+=======
+       
+        document.getElementById("editModal").showModal();
+    }
+
+    
+>>>>>>> b2d9aa4738e914c8ab1fd8ba545b50fe0d6cf04b
     <% if(shouldOpenModal != null) { %>
     document.getElementById('addModal').showModal();
     <% } %>
