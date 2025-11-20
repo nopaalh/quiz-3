@@ -11,7 +11,7 @@
     Locale indonesia = new Locale("id", "ID");
     NumberFormat rupiahFormat = NumberFormat.getCurrencyInstance(indonesia);
 
-    // Logic Form agar tidak hilang saat error (khusus tambah produk)
+   
     String inputName = (String) session.getAttribute("inputName");
     String shouldOpenModal = (String) session.getAttribute("openModal");
 
