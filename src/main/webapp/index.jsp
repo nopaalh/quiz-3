@@ -239,25 +239,25 @@
 
 <script>
     function openEditModal(button) {
-        // Ambil data dari atribut tombol yang diklik
+     
         var id = button.getAttribute("data-id");
         var name = button.getAttribute("data-name");
         var price = button.getAttribute("data-price");
         var stock = button.getAttribute("data-stock");
         var category = button.getAttribute("data-category");
 
-        // Masukkan data ke dalam input form di Modal Edit
+        
         document.getElementById("edit-id").value = id;
         document.getElementById("edit-name").value = name;
         document.getElementById("edit-price").value = price;
         document.getElementById("edit-stock").value = stock;
         document.getElementById("edit-category").value = category;
 
-        // Tampilkan Modal
+       
         document.getElementById("editModal").showModal();
     }
 
-    // Auto open modal tambah jika ada error (dari session)
+    
     <% if(shouldOpenModal != null) { %>
     document.getElementById('addModal').showModal();
     <% } %>
